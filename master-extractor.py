@@ -51,12 +51,14 @@ if status == "OK":
 
             # Fetch it from the server
             status, data = mailbox.fetch(msg_id, '(RFC822)')
+            
             if status == "OK":
                 # Convert it to an Email object
                 msg = email.message_from_bytes(data[0][1])
 
                 # Get the HTML body payload
                 msg_html = msg.get_payload(decode=True)
+                
                 # Save the email timestamp
                 datetime_received = datetime.fromtimestamp(
                     email.utils.mktime_tz(email.utils.parsedate_tz(msg.get('date'))))
@@ -71,20 +73,20 @@ if status == "OK":
                     browser.get(egc_link['href'])
 
                     # Get the type of card
-                    card_type = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[2]/div[4]/h2').text.strip()
+                    card_type = browser.find_element_by_xpath(config.card_type).text.strip()
                     card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
 
                     # Get the card amount
-                    card_amount = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[1]/dd').text.strip()
+                    card_amount = browser.find_element_by_xpath(config.card_amount).text.strip()
 
                     # Get the card number
-                    card_number = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[2]/dd').text
+                    card_number = browser.find_element_by_xpath(config.card_number).text
 
                     # Get the card PIN
                     
-                    card_pin = browser.find_elements_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div[2]/dl[3]/dd')
+                    card_pin = browser.find_elements_by_xpath(config.card_pin)
                     if len(card_pin) > 0:
-                        card_pin = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div[2]/dl[3]/dd').text
+                        card_pin = browser.find_element_by_xpath(config.card_pin).text
                     else:
                         card_pin = "N/A"
 
@@ -119,7 +121,7 @@ if status == "OK":
                     os.remove(screenshot_name)
 
                     # Write the details to the CSV
-                    csv_writer.writerow([card_type, card_amount, card_number, card_pin])
+                    csv_writer.writerow([card_amount, card_number, card_pin])
 
                     # Print out the details to the console
                     print("{}: {} {}, {}".format(card_type, card_amount, card_number, card_pin))
