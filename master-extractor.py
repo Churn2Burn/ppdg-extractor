@@ -73,7 +73,7 @@ if status == "OK":
                     browser.get(egc_link['href'])
 
                     # Get the type of card
-                    card_type = browser.find_element_by_xpath(config.card_type).text.strip()
+                    card_type = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[2]/div[4]/h2').text.strip()
                     card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
 
                     # Get the card amount
