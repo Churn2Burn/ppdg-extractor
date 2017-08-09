@@ -13,9 +13,13 @@ Program specifically configured on Windows - includes ChromeDriver.exe - for gma
 
 3) Edit config.py file:
 	a) Change CHROMEDRIVER_PATH to location of this folder
+	
 	b) Change IMAP_USERNAME to your gmail account
+	
 	c) Change IMAP_PASSWORD to your gmail password
+	
 	d) Note: When logging in for the first time, gmail may block access. You will need to follow the steps in the email to follow to enable less secure applications.
+	
 	e) Create a gmail label for the cards you would like to extract and change FOLDER to this label.
 	
 4) Double click on MasterExtractor.bat to run the program. You will get .jpg screenshots in the "screenshots" folder and will have a .csv file with near GCW (GiftCardWiki) submission standards.
