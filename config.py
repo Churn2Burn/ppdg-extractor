@@ -9,3 +9,8 @@ IMAP_PASSWORD = "PASSWORD"
 FOLDER = "LABEL" 
 
 FROM_EMAIL = "gifts@paypal.com"
+
+card_type = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[2]/div[4]/h2'
+card_amount = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[1]/dd'
+card_number = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[2]/dd'
+card_pin = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[3]/dd'
