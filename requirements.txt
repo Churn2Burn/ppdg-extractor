@@ -1,0 +1,5 @@
+# TODO: lock these into specific versions
+requests
+bs4
+selenium
+image
