@@ -6,6 +6,7 @@ Program specifically configured on Windows - includes ChromeDriver.exe - for gma
 1) Install Python 3.6.1
 
 2) Open command prompt (cmd) and run the following commands:
+	
 	a) pip3 install requests
 	
 	b) pip3 install bs4
@@ -15,6 +16,7 @@ Program specifically configured on Windows - includes ChromeDriver.exe - for gma
 	d) pip3 install image
 
 3) Edit config.py file:
+
 	a) Change CHROMEDRIVER_PATH to location of this folder
 	
 	b) Change IMAP_USERNAME to your gmail account
