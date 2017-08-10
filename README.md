@@ -9,7 +9,7 @@ Program specifically configured on Windows - includes ChromeDriver.exe - for gma
 	
 	 pip3 install -r requirements.txt
 
-3) Edit config.py file:
+3) Rename config.sample.py to config.py and edit the following variables:
 	
 	a) Change IMAP_USERNAME to your gmail account
 	
