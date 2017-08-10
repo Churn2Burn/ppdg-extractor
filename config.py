@@ -1,4 +1,4 @@
-CHROMEDRIVER_PATH = "chromedriver.exe"
+CHROMEDRIVER_PATH = "D:\Desktop\ppdg_egc_extractor\chromedriver.exe"
 
 IMAP_HOST = "imap.gmail.com"
 IMAP_PORT = 993
