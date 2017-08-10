@@ -1,4 +1,8 @@
-CHROMEDRIVER_PATH = "D:\Desktop\ppdg_egc_extractor\chromedriver.exe"
+import os
+directory = os.path.dirname(os.path.abspath(__file__))
+file = "chromedriver.exe"
+
+CHROMEDRIVER_PATH = os.path.join(directory, file)
 
 IMAP_HOST = "imap.gmail.com"
 IMAP_PORT = 993
