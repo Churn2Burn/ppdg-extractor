@@ -5,18 +5,21 @@ Program specifically configured on Windows - includes ChromeDriver.exe - for gma
 
 1) Install Python 3.6.1
 
-2) Open command prompt (cmd) and run the following commands:
-	a) pip3 install requests
-	b) pip3 install bs4
-	c) pip3 install selenium
-	d) pip3 install image
+2) Open command prompt (cmd) and navigate to this folder. Install the dependencies by running the following commands:
+	
+	 pip3 install -r requirements.txt
 
 3) Edit config.py file:
-	a) Change CHROMEDRIVER_PATH to location of this folder
-	b) Change IMAP_USERNAME to your gmail account
-	c) Change IMAP_PASSWORD to your gmail password
-	d) Note: When logging in for the first time, gmail may block access. You will need to follow the steps in the email to follow to enable less secure applications.
-	e) Create a gmail label for the cards you would like to extract and change FOLDER to this label.
+	
+	a) Change IMAP_USERNAME to your gmail account
+	
+	b) Change IMAP_PASSWORD to your gmail password
+	
+	c) Change XPATH locations for card_amount, card_number, and card_pin if necessary (will be required if these fields come back as N/A in the console. XPATH can be found by inspecting element in Chrome, right clicking on the item in the elements console, Copy, "Copy XPATH".
+	
+	d) Create a gmail label for the cards you would like to extract and change FOLDER to this label.
+	
+	e) Note: When logging in for the first time, gmail may block access. You will need to follow the steps in the email to follow to enable less secure applications.
 	
 4) Double click on MasterExtractor.bat to run the program. You will get .jpg screenshots in the "screenshots" folder and will have a .csv file with near GCW (GiftCardWiki) submission standards.
 
