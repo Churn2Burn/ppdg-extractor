@@ -67,7 +67,7 @@ if status == "OK":
                 msg_parsed = BeautifulSoup(msg_html, 'html.parser')
 
                 # Find the "View Gift" link
-                egc_link = msg_parsed.find("a", text="View My Code")
+                egc_link = msg_parsed.find("a", text="View My Code") or msg_parsed.find("a", text="Unwrap Your Gift")
                 if egc_link is not None:
                     # Open the link in the browser
                     browser.get(egc_link['href'])
