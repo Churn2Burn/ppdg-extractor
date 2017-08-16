@@ -57,7 +57,10 @@ if status == "OK":
                 msg = email.message_from_bytes(data[0][1])
 
                 # Get the HTML body payload
-                msg_html = msg.get_payload(decode=True)
+                if config.FROM_EMAIL == "gifts@paypal.com":
+                    msg_html = msg.get_payload(decode=True)   
+                else:
+                    msg_html = msg.get_payload(1).get_payload(decode=True)
                 
                 # Save the email timestamp
                 datetime_received = datetime.fromtimestamp(
@@ -67,7 +70,7 @@ if status == "OK":
                 msg_parsed = BeautifulSoup(msg_html, 'html.parser')
 
                 # Find the "View Gift" link
-                egc_link = msg_parsed.find("a", text="View My Code")
+                egc_link = msg_parsed.find("a", text="View My Code") or egc_link = msg_parsed.find("a", text="Unwrap Your Gift")
                 if egc_link is not None:
                     # Open the link in the browser
                     browser.get(egc_link['href'])
