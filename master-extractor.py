@@ -76,7 +76,7 @@ if status == "OK":
                     browser.get(egc_link['href'])
 
                     # Get the type of card
-                    card_type = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[2]/div[4]/h2').text.strip()
+                    card_type = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]').text.strip()
                     card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
 
                     # Get the card amount
@@ -100,7 +100,7 @@ if status == "OK":
                         redeem_flag = 0
                     
                     # Save a screenshot
-                    element = browser.find_element_by_xpath('//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div')
+                    element = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[1]/div[2]')
                     location = element.location
                     
                     size = element.size
@@ -110,7 +110,7 @@ if status == "OK":
 
                     im = Image.open(screenshot_name)
                     left = location ['x']
-                    top = location['y'] + 65
+                    top = location['y']
                     right =  location['x'] + size['width']
 					
                     if redeem_flag == 1: 
