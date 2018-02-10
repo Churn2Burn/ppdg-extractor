@@ -16,6 +16,6 @@ FOLDER = 'LABEL'
 
 FROM_EMAIL = 'gifts@paypal.com'
 
-card_amount = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[1]/dd'
-card_number = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[2]/dd'
-card_pin = '//*[@id="main-content"]/div[3]/div/div[3]/section/div/div[1]/div/div/div/dl[3]/dd'
+card_amount = '//*[@id="app"]/div/div/div/div/section/div/div[1]/div[2]/div/dl[1]/dd'
+card_number = '//*[@id="app"]/div/div/div/div/section/div/div[1]/div[2]/div/dl[2]/dd'
+card_pin = '//*[@id="app"]/div/div/div/div/section/div/div[1]/div[2]/div[2]/dl[3]/dd'
