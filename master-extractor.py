@@ -1,4 +1,5 @@
 import os
+import sys
 import base64
 import email
 import email.utils
@@ -12,6 +13,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
 import config
+
+if os.name == 'nt':
+    sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 # Connect to the server
 if config.IMAP_SSL:
