@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
 import config
+import time
 
 if os.name == 'nt':
     sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
@@ -80,8 +81,16 @@ if status == "OK":
                     browser.get(egc_link['href'])
 
                     # Get the type of card
-                    card_type = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]').text.strip()
-                    card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
+                    card_type_exists = browser.find_elements_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]')
+					
+                    if card_type_exists:
+                        card_type = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]').text.strip()
+                        card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
+						
+                    else:
+                        input("Press Enter to continue...")
+                        card_type = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]').text.strip()
+                        card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
 
                     # Get the card amount
                     card_amount = browser.find_element_by_xpath(config.card_amount).text.strip()
