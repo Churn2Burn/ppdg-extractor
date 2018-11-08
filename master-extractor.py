@@ -145,6 +145,8 @@ if status == "OK":
                     print("ERROR: Unable to find eGC link in message {}, skipping.".format(msg_id.decode('UTF-8')))
             else:
                 print("ERROR: Unable to fetch message {}, skipping.".format(msg_id.decode('UTF-8')))
+            
+            time.sleep(8)
 
         # Close the browser
         browser.close()
