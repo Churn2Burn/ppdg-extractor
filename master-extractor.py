@@ -56,17 +56,15 @@ if status == "OK":
 
             # Fetch it from the server
             status, data = mailbox.fetch(msg_id, '(RFC822)')
-            
+
             if status == "OK":
                 # Convert it to an Email object
                 msg = email.message_from_bytes(data[0][1])
 
                 # Get the HTML body payload
-                if config.FROM_EMAIL == "gifts@paypal.com":
-                    msg_html = msg.get_payload(decode=True)   
-                else:
-                    msg_html = msg.get_payload(1).get_payload(decode=True)
-                
+                config.FROM_EMAIL == "rewards@notifications.earnwithdrop.com"
+                msg_html = msg.get_payload(1).get_payload(decode=True)
+
                 # Save the email timestamp
                 datetime_received = datetime.fromtimestamp(
                     email.utils.mktime_tz(email.utils.parsedate_tz(msg.get('date'))))
@@ -74,62 +72,46 @@ if status == "OK":
                 # Parse the message
                 msg_parsed = BeautifulSoup(msg_html, 'html.parser')
 
-                # Find the "View Gift" link
-                egc_link = msg_parsed.find("a", text="View My Code") or msg_parsed.find("a", text="Unwrap Your Gift")
+                # Find the "Claim Reward" link
+                egc_link = msg_parsed.find("a", text="Claim Reward")
                 if egc_link is not None:
                     # Open the link in the browser
                     browser.get(egc_link['href'])
 
                     # Get the type of card
-                    card_type_exists = browser.find_elements_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]')
-					
+                    card_type_exists = browser.find_elements_by_xpath('//*[@id="top-content2"]/h2[2]')
+
                     if card_type_exists:
-                        card_type = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]').text.strip()
+                        card_type = browser.find_element_by_xpath('//*[@id="top-content2"]/h2[2]').text.strip()
                         card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
-						
+
                     else:
                         input("Press Enter to continue...")
-                        card_type = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[3]/div[2]/div/h2[1]').text.strip()
-                        card_type = re.compile(r'(.*) Terms and Conditions').match(card_type).group(1)
+                        browser.find_element_by_css_selector('.roundbutton').click()
+                        drop_string_1 = browser.find_element_by_xpath('//*[@id="top-content2"]/h2[2]').text.strip()
+                        drop_string_2 = browser.find_element_by_xpath('//*[@id="top-content2"]/p').text.strip()
 
-                    # Get the card amount
-                    card_amount = browser.find_element_by_xpath(config.card_amount).text.strip()
+                        card_output = drop_string_1 + ',' + drop_string_2
+                        card_output = re.search(r'\$(\d+(\.\d+)?).+For (.+),.+Code: (.+)', card_output).groups()
 
-                    # Get the card number
-                    card_number = browser.find_element_by_xpath(config.card_number).text
+                        card_output[2] # brand
+                        card_output[0] # denom
+                        card_output[3] # code
 
-                    # Get the card PIN
-                    
-                    card_pin = browser.find_elements_by_xpath(config.card_pin)
-                    if len(card_pin) > 0:
-                        card_pin = browser.find_element_by_xpath(config.card_pin).text
-                    else:
-                        card_pin = "N/A"
-
-                    redeem = browser.find_elements_by_id("redeem_button")
-                    if len(redeem) > 0:
-                        redeem_flag = 1
-                    else:
-                        redeem_flag = 0
-                    
                     # Save a screenshot
-                    element = browser.find_element_by_xpath('//*[@id="app"]/div/div/div/div/section/div/div[1]/div[2]')
+                    element = browser.find_element_by_xpath('//*[@id="top-content2"]')
                     location = element.location
-                    
+
                     size = element.size
-                    screenshot_name = os.path.join(screenshots_dir, card_number + '.png')
-                    screenshot_name_new = os.path.join(screenshots_dir, card_number + '.jpg')
+                    screenshot_name = os.path.join(screenshots_dir, card_output[3] + '.png')
+                    screenshot_name_new = os.path.join(screenshots_dir, card_output[3] + '.jpg')
                     browser.save_screenshot(screenshot_name)
 
                     im = Image.open(screenshot_name)
                     left = location ['x']
                     top = location['y']
                     right =  location['x'] + size['width']
-					
-                    if redeem_flag == 1: 
-                        bottom = location['y'] + size['height'] - 80
-                    else:
-                        bottom = location['y'] + size['height']
+                    bottom = location['y'] + size['height']
 
                     im = im.crop((left, top, right, bottom))
                     im.convert('RGB').save(screenshot_name_new)
@@ -137,15 +119,15 @@ if status == "OK":
                     os.remove(screenshot_name)
 
                     # Write the details to the CSV
-                    csv_writer.writerow([card_amount, card_number, card_pin])
+                    csv_writer.writerow([card_output[2],card_output[0],card_output[3]])
 
                     # Print out the details to the console
-                    print("{}: {} {}, {}".format(card_type, card_amount, card_number, card_pin))
+                    print("{}, {}, {}".format(card_output[2], card_output[0], card_output[3]))
                 else:
                     print("ERROR: Unable to find eGC link in message {}, skipping.".format(msg_id.decode('UTF-8')))
             else:
                 print("ERROR: Unable to fetch message {}, skipping.".format(msg_id.decode('UTF-8')))
-            
+
             time.sleep(8)
 
         # Close the browser
