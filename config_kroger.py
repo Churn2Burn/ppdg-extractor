@@ -9,8 +9,8 @@ CHROMEDRIVER_PATH = os.path.join(directory, file)
 IMAP_HOST = 'imap.gmail.com'
 IMAP_PORT = 993
 IMAP_SSL = True
-IMAP_USERNAME = 'EMAIL'
-IMAP_PASSWORD = 'PASSWORD'
+IMAP_USERNAME = 'IMAP_USERNAME'
+IMAP_PASSWORD = 'IMAP_PASSWORD'
 
 FOLDER = 'Kroger'
 
@@ -21,6 +21,6 @@ FOLDER = 'Kroger'
 #subject 'Your Order is Complete'
 FROM_EMAIL = 'customerservice@giftcardmall.com'
 
-card_amount = ['//*[@id="amount"]', '//*[@id="value"]']
+card_amount = [('//*[@id="amount"]', '$'), ('//*[@id="value"]', 'eCard Amount: $')]
 card_number = '//*[@id="cardNumber2"]'
-card_pin = ['//*[@class="cardNum"]/p[2]/span', '//*[@id="securitycode"]']
+card_pin = [('//*[@class="cardNum"]/p[2]/span',''), ('//*[@id="securitycode"]/p', 'Pin #: ')]

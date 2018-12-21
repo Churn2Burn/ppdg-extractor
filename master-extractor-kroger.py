@@ -85,9 +85,9 @@ def extract():
                             while not_found:
                                 # Try to get the page to load
                                 try:
-                                    for amount_path in config.card_amount:
+                                    for amount_path, to_strip_amount in config.card_amount:
                                         try: 
-                                            card_amount = browser.find_element_by_xpath(amount_path).text.strip('$')
+                                            card_amount = browser.find_element_by_xpath(amount_path).text.strip(to_strip_amount)
                                             not_found = False
                                             break
                                         except NoSuchElementException:
@@ -102,7 +102,7 @@ def extract():
                             print(card_number, card_amount)
                             # Get the card PIN
                             card_type = ''
-                            for pin_path in config.card_pin:
+                            for pin_path, to_strip_pin in config.card_pin:
                                 try:
                                     card_pin = browser.find_elements_by_xpath(pin_path)
                                 except NoSuchElementException:
@@ -110,7 +110,7 @@ def extract():
                             print(card_pin[0].text)
 
                             if len(card_pin) > 0:
-                                card_pin = browser.find_element_by_xpath(pin_path).text
+                                card_pin = browser.find_element_by_xpath(pin_path).text.strip(to_strip_pin)
                             else:
                                 card_pin = "N/A"
 
