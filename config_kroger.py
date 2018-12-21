@@ -9,18 +9,18 @@ CHROMEDRIVER_PATH = os.path.join(directory, file)
 IMAP_HOST = 'imap.gmail.com'
 IMAP_PORT = 993
 IMAP_SSL = True
-IMAP_USERNAME = 'USERNAME'
+IMAP_USERNAME = 'EMAIL'
 IMAP_PASSWORD = 'PASSWORD'
 
 FOLDER = 'Kroger'
 
 
 # subject 'You have received a gift card from [Name]'
-FROM_EMAIL = 'gcm-cust-serv@giftcardmall.com'
+#FROM_EMAIL = 'gcm-cust-serv@giftcardmall.com'
 
 #subject 'Your Order is Complete'
-#FROM_EMAIL = 'customerservice@giftcardmall.com'
+FROM_EMAIL = 'customerservice@giftcardmall.com'
 
-card_amount = '//*[@class="showCardInfo"]/h2'
+card_amount = ['//*[@id="amount"]', '//*[@id="value"]']
 card_number = '//*[@id="cardNumber2"]'
-card_pin = '//*[@class="cardNum"]/p[2]/span'
+card_pin = ['//*[@class="cardNum"]/p[2]/span', '//*[@id="securitycode"]']

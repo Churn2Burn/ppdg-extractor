@@ -85,8 +85,13 @@ def extract():
                             while not_found:
                                 # Try to get the page to load
                                 try:
-                                    card_amount = browser.find_element_by_xpath(config.card_amount).text.strip('$')
-                                    not_found = False
+                                    for amount_path in config.card_amount:
+                                        try: 
+                                            card_amount = browser.find_element_by_xpath(amount_path).text.strip('$')
+                                            not_found = False
+                                            break
+                                        except NoSuchElementException:
+                                            continue
                                 # If it doesn't load refresh
                                 except NoSuchElementException:
                                     browser.get(egc_link['href'])
@@ -97,11 +102,15 @@ def extract():
                             print(card_number, card_amount)
                             # Get the card PIN
                             card_type = ''
-                            card_pin = browser.find_elements_by_xpath(config.card_pin)
+                            for pin_path in config.card_pin:
+                                try:
+                                    card_pin = browser.find_elements_by_xpath(pin_path)
+                                except NoSuchElementException:
+                                    continue
                             print(card_pin[0].text)
 
                             if len(card_pin) > 0:
-                                card_pin = browser.find_element_by_xpath(config.card_pin).text
+                                card_pin = browser.find_element_by_xpath(pin_path).text
                             else:
                                 card_pin = "N/A"
 
@@ -145,7 +154,7 @@ def extract():
                 else:
                     print("ERROR: Unable to fetch message {}, skipping.".format(msg_id.decode('UTF-8')))
                 
-                time.sleep(8)
+                time.sleep(0.2)
 
             # Close the browser
             browser.close()
