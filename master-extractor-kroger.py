@@ -99,15 +99,15 @@ def extract():
 
                             # Get the card number
                             card_number = browser.find_element_by_xpath(config.card_number).text.replace(" ", "")
-                            print(card_number, card_amount)
+                            # print(card_number, card_amount)
                             # Get the card PIN
                             card_type = ''
                             for pin_path, to_strip_pin in config.card_pin:
                                 try:
                                     card_pin = browser.find_elements_by_xpath(pin_path)
+                                    break
                                 except NoSuchElementException:
                                     continue
-                            print(card_pin[0].text)
 
                             if len(card_pin) > 0:
                                 card_pin = browser.find_element_by_xpath(pin_path).text.strip(to_strip_pin)
