@@ -15,6 +15,7 @@ from time import sleep
 import config
 import time
 
+
 if os.name == 'nt':
     sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
