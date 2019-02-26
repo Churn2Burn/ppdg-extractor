@@ -67,6 +67,8 @@ for from_email in config.FROM_EMAILS:
                         msg = email.message_from_bytes(data[0][1])
 
                         # Get the HTML body payload
+                        # Tests to see if its multipart,
+                        # if it is you will get out of bounds exception on the get_payload(1) function
                         if not msg.is_multipart():
                             msg_html = msg.get_payload(decode=True)
                         else:
