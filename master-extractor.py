@@ -65,7 +65,12 @@ for from_email in config.FROM_EMAILS:
                     if status == "OK":
                         # Convert it to an Email object
                         msg = email.message_from_bytes(data[0][1])
-                        msg_html = msg.get_payload(1).get_payload(decode=True)
+
+                        # Get the HTML body payload
+                        if not msg.is_multipart():
+                            msg_html = msg.get_payload(decode=True)
+                        else:
+                            msg_html = msg.get_payload(1).get_payload(decode=True)
 
                         # Save the email timestamp
                         datetime_received = datetime.fromtimestamp(
